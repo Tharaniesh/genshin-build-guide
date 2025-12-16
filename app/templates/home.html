@@ -1,0 +1,158 @@
+{% extends "layout.html" %}
+{% block content %}
+  <!-- HERO -->
+  <section class="container hero">
+    <div class="hero-card row g-0">
+      <div class="col-lg-7 hero-left"> 
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="channel-badge"> </div>
+          <div>
+            <div class="tiny">CHANNEL</div>
+            <div class="hero-title"><span class="text-danger">Karadi Gaming</span> — Live Stream and Fun content</div>
+            <div class="hero-sub">High-quality Genshin build optimizer, live streams, and quick tools for players. Subscribe for regular guides & fun streams.</div>
+            <div class="d-flex gap-2">
+              <a class="btn cta-btn" style="background: linear-gradient(90deg,var(--accent),var(--accent-2)); color:#04121b;" href="https://www.youtube.com/@karadigamming"><i class="bi bi-play-fill"></i> View Channel</a>
+              <a class="btn cta-btn btn-outline-light" href="{{ url_for('build.build_guide') }}"><i class="bi bi-file-earmark-code"></i> Start Building</a>
+              <a class="btn btn-link text-decoration-none tiny" href="#"><i class="bi bi-twitter"></i></a>
+              <a class="btn btn-link text-decoration-none tiny" href="https://www.youtube.com/@karadigamming"><i class="bi bi-youtube"></i></a>
+              <a class="btn btn-link text-decoration-none tiny" href="#"><i class="bi bi-discord"></i></a>     
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="row g-2">
+            <div class="col-6 col-md-4">
+              <div class="feature-stat p-3" style="border-radius:12px; background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03);">
+                <div class="tiny">Subscribers</div>
+                <div style="font-weight:800; font-size:1.1rem">80</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4">
+              <div class="feature-stat p-3" style="border-radius:12px; background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03);">
+                <div class="tiny">Avg Viewers</div>
+                <div style="font-weight:800; font-size:1.1rem">1.4k</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="feature-stat p-3" style="border-radius:12px; background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03);">
+                <div class="tiny">Total Videos</div>
+                <div style="font-weight:800; font-size:1.1rem">96</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-5 hero-right p-4">
+        <div style="max-width:420px; width:100%;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px;">
+            <div>
+              <div class="tiny">Next Stream</div>
+              <div style="font-weight:800">Dec 12 • 8:00 PM IST</div>
+            </div>
+            <div style="text-align:right">
+              <div class="tiny">Status</div>
+              <div style="font-weight:900; color:var(--accent);">LIVE SOON</div>
+            </div>
+          </div>
+
+          <!-- mini build preview -->
+          <div style="border-radius:12px; padding:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03);">
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div>
+                <div style="font-weight:800">Quick Build Preview</div>
+                <div class="tiny">Vaporize / Battery</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-weight:900; font-size:1.4rem; color:var(--accent);">72</div>
+                <div class="tiny">Composite</div>
+              </div>
+            </div>
+
+            <div class="mt-3 d-flex gap-2">
+              <div style="flex:1">
+                <div class="tiny">Main</div>
+                <div style="font-weight:800">Ganyu</div>
+              </div>
+              <div style="flex:1">
+                <div class="tiny">Support</div>
+                <div style="font-weight:800">Xingqiu</div>
+              </div>
+              <div style="flex:1">
+                <div class="tiny">ER</div>
+                <div style="font-weight:800">160</div>
+              </div>
+            </div>
+
+            <div class="mt-3 d-flex gap-2 d-none">
+              <a class="btn btn-sm btn-outline-light w-100" href="#"><i class="bi bi-pencil"></i> Edit</a>
+              <a class="btn btn-sm" style="background:var(--accent); color:#04121b; font-weight:800;" href="#"><i class="bi bi-lightning-fill"></i> Apply</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 feature cards -->
+  <section id="features" class="container cards-row">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card h-100">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="card-hex">G</div>
+            <div>
+              <div style="font-weight:900; font-size:1.05rem">Genshin Character Build</div>
+              <div class="tiny">Interactive team builder and optimizer — make builds fast.</div>
+            </div>
+          </div>
+          <p class="muted-sm">Create teams, select characters/weapons/artifacts, run compatibility tests and get suggestions. Works as guest or with an account.</p>
+          <div class="mt-3 d-flex gap-2">
+            <a class="btn btn-sm btn-outline-light" href="#"><i class="bi bi-play-btn"></i> Try Demo</a>
+            <a class="btn btn-sm" style="background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#04121b; font-weight:800" href="#"><i class="bi bi-joystick"></i> Open Builder</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="feature-card h-100">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="card-hex">C</div>
+            <div>
+              <div style="font-weight:900; font-size:1.05rem">Coming Soon</div>
+              <div class="tiny">More tools & integrations are on the way.</div>
+            </div>
+          </div>
+          <p class="muted-sm">We are working on additional calculators, live overlay tools, and community features. Stay tuned — subscribe to get updates.</p>
+          <div class="mt-3 d-flex gap-2">
+            <a class="btn btn-sm btn-outline-light" href="#"><i class="bi bi-bell"></i> Notify Me</a>
+            <a class="btn btn-sm btn-light" href="#"><i class="bi bi-info-circle"></i> Roadmap</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="feature-card h-100">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="card-hex">C</div>
+            <div>
+              <div style="font-weight:900; font-size:1.05rem">Community / Guides</div>
+              <div class="tiny">Guides, clips and community highlights from the channel.</div>
+            </div>
+          </div>
+          <p class="muted-sm">Browse guides, watch short clips and share builds with the community. Submit your clips to be featured on stream.</p>
+          <div class="mt-3 d-flex gap-2">
+            <a class="btn btn-sm btn-outline-light" href="#community"><i class="bi bi-people"></i> Join</a>
+            <a class="btn btn-sm" style="background:linear-gradient(90deg,var(--accent-2),var(--accent)); color:#04121b; font-weight:800" href="#"><i class="bi bi-chat-dots"></i> Open Forum</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}

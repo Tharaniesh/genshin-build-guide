@@ -1,0 +1,70 @@
+<!-- templates/slot-card.html -->
+<div class="slot-card d-flex gap-2" data-slot-template>
+  <!-- <div class="slot-badge" data-slot-badge>%%IDX%%</div> -->
+
+  <div class="slot-body" style="flex:1;">
+    <div class="d-flex justify-content-between align-items-center slot-top mb-1">
+      <div style="font-weight:700">Slot %%IDX%%</div>
+      <button type="button" class="btn btn-sm btn-outline-danger remove-slot-btn">Remove</button>
+    </div>
+
+    <div class="row g-2">
+      <!-- Character (text + constellation select) -->
+      <div class="col-6">
+        <label class="form-label small muted-sm">Character</label>
+        <div class="d-flex gap-2 align-items-center">
+          <input type="text" class="form-control form-control-sm char-input" id="char_%%IDX%%" list="char_%%IDX%%_list" placeholder="Type or pick character">
+          <select class="form-select form-select-sm constellation-select" style="width:92px">
+            <option value="0">C0</option>
+            <option value="1">C1</option>
+            <option value="2">C2</option>
+            <option value="3">C3</option>
+            <option value="4">C4</option>
+            <option value="5">C5</option>
+            <option value="6">C6</option>
+          </select>
+        </div>
+        <datalist id="char_%%IDX%%_list"></datalist>
+      </div>
+
+      <!-- Weapon (text + refine select) -->
+      <div class="col-6">
+        <label class="form-label small muted-sm">Weapon</label>
+        <div class="d-flex gap-2 align-items-center">
+          <input type="text" class="form-control form-control-sm wep-input" id="wep_%%IDX%%" list="wep_%%IDX%%_list" placeholder="Type or pick weapon">
+          <select class="form-select form-select-sm refine-select" style="width:92px">
+            <option value="1">Ref 1</option>
+            <option value="2">Ref 2</option>
+            <option value="3">Ref 3</option>
+            <option value="4">Ref 4</option>
+            <option value="5">Ref 5</option>
+          </select>
+        </div>
+        <datalist id="wep_%%IDX%%_list"></datalist>
+      </div>
+
+      <!-- Artifact (set type + dynamic name inputs) -->
+      <div class="col-9">
+        <label class="form-label small muted-sm">Artifact</label>
+        <div class="d-flex gap-2 align-items-center">
+          <select class="form-select form-select-sm art-set-type" style="width:92px">
+            <option value="2">2-pc</option>
+            <option value="4">4-pc</option>
+          </select>
+          <div class="flex-fill art-names-container"></div>
+        </div>
+        <datalist id="art_%%IDX%%_list"></datalist>
+      </div>
+      <div class="col-3">
+        <label class="form-label small muted-sm">Role</label>
+        <select class="form-select form-select-sm art-role-select">
+          <option value="main">Main</option>
+          <option value="sub">Sub</option>
+          <option value="support">Support</option>
+          <option value="healer">Healer</option>
+        </select>
+        <datalist id="art_%%IDX%%_list"></datalist>
+      </div>
+    </div>
+  </div>
+</div>
