@@ -5,6 +5,7 @@ import json
 from math import e
 from time import time
 from xml.dom.minidom import CharacterData
+from app.model import BuildModel
 from flask import Blueprint, render_template, request, jsonify, current_app
 from app.model.BuildModel import buildModel, get_engine
 
@@ -34,6 +35,37 @@ def slot_card():
     # This should return the fragment template used by the frontend
     return render_template('slot_card.html')
 
+@build_bp.route('/api/result_section', methods=['POST'])
+def result_section():
+    data = render_template('result_section.html')
+    if not data:
+        return jsonify({"status": "error", "message": "Invalid JSON"}), 400
+    return jsonify({"status": "success", "data": data})
+
+@build_bp.route('/api/action_options', methods=['POST'])
+def action_options():
+    data = render_template('action_options.html')
+    if not data:
+        return jsonify({"status": "error", "message": "Invalid JSON"}), 400
+    return jsonify({"status": "success", "data": data})
+
+
+@build_bp.route('/api/result_character_suggestion', methods=['POST'])
+def result_character_suggestion():
+    try:
+        html = render_template('result_character_suggestion.html')
+        return jsonify({"status": "success","html": html})
+    except Exception as e:
+        current_app.logger.error(f"[result_character_suggestion] Failed: {e}",exc_info=True)
+        return jsonify({"status": "error","message": str(e)}), 500
+
+@build_bp.route('/api/team_evaluation', methods=['POST'])
+def team_evaluation():
+    data = render_template('team_eval.html')
+    if not data:
+        return jsonify({"status": "error", "message": "Invalid JSON"}), 400
+    return jsonify({"status": "success", "data": data})
+
 @build_bp.route('/api/apply_library_selection', methods=['POST'])
 def apply_library_selection():
     data = request.get_json(silent=True)
@@ -47,45 +79,31 @@ def apply_library_selection():
     if not user_id or not isinstance(selected, list):
         return jsonify({"status": "error", "message": "Invalid payload"}), 400
 
-    # normalize slugs
-    selected = {str(c).strip().lower() for c in selected if c}
+    # Normalize slugs
+    selected = {
+        str(c).strip().lower()
+        for c in selected
+        if c
+    }
 
-    conn = get_db_connection()
-    cur = conn.cursor(dictionary=True)
+    # Existing library (ensure set)
+    existing = set(BuildModel.get_user_library_slugs(user_id))
 
-    # 1️⃣ Get current library from DB
-    cur.execute(
-        "SELECT char_slug FROM user_library WHERE user_id = %s",
-        (user_id,)
-    )
-    existing = {row['char_slug'] for row in cur.fetchall()}
-
-    # 2️⃣ Calculate diff
+    # Diff
     to_add = selected - existing
     to_remove = existing - selected
 
-    # 3️⃣ Insert new selections
+    # DB ops
     if to_add:
-        cur.executemany(
-            "INSERT IGNORE INTO user_library (user_id, char_slug) VALUES (%s, %s)",
-            [(user_id, slug) for slug in to_add]
-        )
+        BuildModel.add_user_library_entries(user_id, to_add)
 
-    # 4️⃣ Remove unselected
     if to_remove:
-        cur.executemany(
-            "DELETE FROM user_library WHERE user_id = %s AND char_slug = %s",
-            [(user_id, slug) for slug in to_remove]
-        )
-
-    conn.commit()
-    cur.close()
-    conn.close()
+        BuildModel.remove_user_library_entries(user_id, to_remove)
 
     return jsonify({
         "status": "success",
-        "added": list(to_add),
-        "removed": list(to_remove),
+        "added": sorted(to_add),
+        "removed": sorted(to_remove),
         "final_count": len(selected)
     })
 

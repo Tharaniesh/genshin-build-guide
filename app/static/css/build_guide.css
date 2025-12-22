@@ -279,3 +279,231 @@ select.form-select {
   font-weight: 600;
   color: #0d6efd;
 }
+
+/* Ensure modal is always above floating widgets */
+.modal {
+  z-index: 1055 !important;
+}
+
+.modal-backdrop {
+  z-index: 1050 !important;
+}
+
+/* Optional: fullscreen modal look */
+.modal-fullscreen-custom {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  margin: 0;
+}
+
+.modal-fullscreen-custom .modal-content {
+  height: 100vh;
+  border-radius: 0;
+}
+
+/* Hide floating widgets when any Bootstrap modal is open */
+body.modal-open .donate-float {
+  display: none !important;
+}
+
+
+
+/* Character result suggestions CSS */
+
+.character-card-suggestions {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.02)
+  );
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 10px;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Role badge (top-right) */
+.role-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 0.7rem;
+  padding: 3px 7px;
+  border-radius: 8px;
+  background: rgba(13,110,253,0.15);
+  color: #8ab4ff;
+  font-weight: 600;
+}
+
+/* Character image */
+.char-image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  background: radial-gradient(circle at top, #1e293b, #020617);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.char-image {
+  width: 88%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Weapon row */
+.weapon-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.weapon-img img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.06);
+  padding: 4px;
+}
+
+.weapon-info {
+  flex: 1;
+  font-size: 0.72rem;
+}
+
+.weapon-name {
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.suggestion-score {
+  font-size: 0.7rem;
+  color: #22c55e;
+  margin-top: 2px;
+}
+
+/* Compact stat line */
+.suggestion-breakdown {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 0.65rem;
+  color: #94a3b8;
+}
+
+/* Character glow effect
+.character-card-suggestions .char-image {
+  filter:
+    drop-shadow(0 0 6px rgba(0, 246, 160, 0.55))
+    drop-shadow(0 0 14px rgba(0, 246, 160, 0.35))
+    drop-shadow(0 0 26px rgba(0, 246, 160, 0.2));
+  transition: filter 0.25s ease, transform 0.25s ease;
+} */
+
+/* Stronger glow on hover */
+.character-card-suggestions:hover .char-image {
+  filter:
+    drop-shadow(0 0 8px var(--glow-color))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--glow-color) 65%, transparent))
+    drop-shadow(0 0 36px color-mix(in srgb, var(--glow-color) 35%, transparent));
+  transform: scale(1.04);
+}
+
+
+.glow-pyro {
+  filter:
+    drop-shadow(0 0 8px rgba(255, 99, 71, 0.7))
+    drop-shadow(0 0 22px rgba(255, 99, 71, 0.45));
+}
+
+.glow-hydro {
+  filter:
+    drop-shadow(0 0 8px rgba(56, 189, 248, 0.7))
+    drop-shadow(0 0 22px rgba(56, 189, 248, 0.45));
+}
+
+.glow-electro {
+  filter:
+    drop-shadow(0 0 8px rgba(168, 85, 247, 0.75))
+    drop-shadow(0 0 22px rgba(168, 85, 247, 0.45));
+}
+.glow-cryo {
+  filter:
+    drop-shadow(0 0 8px rgba(147, 197, 253, 0.7))
+    drop-shadow(0 0 22px rgba(147, 197, 253, 0.45));
+}
+.glow-anemo {
+  filter:
+    drop-shadow(0 0 8px rgba(134, 239, 172, 0.7))
+    drop-shadow(0 0 22px rgba(134, 239, 172, 0.45));
+}
+.glow-dendro {
+  filter:
+    drop-shadow(0 0 8px rgba(74, 222, 128, 0.7))
+    drop-shadow(0 0 22px rgba(74, 222, 128, 0.45));
+}
+.glow-geo {
+  filter:
+    drop-shadow(0 0 8px rgba(252, 211, 77, 0.7))
+    drop-shadow(0 0 22px rgba(252, 211, 77, 0.45));
+}
+
+/* ===== FORCE ROLE BADGE TO FRONT ===== */
+
+.character-card-suggestions {
+  position: relative;
+  isolation: isolate;          /* 🔴 creates its own stacking context */
+}
+
+.char-image-wrap,
+.char-image {
+  position: relative;
+  z-index: 1;                  /* image layer */
+}
+
+/* ROLE BADGE — ALWAYS ON TOP */
+.role-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  z-index: 999;                /* 🔥 higher than glow */
+  pointer-events: none;        /* clicks pass through */
+
+  font-size: 0.7rem;
+  padding: 3px 7px;
+  border-radius: 8px;
+
+  background: rgba(13,110,253,0.2);
+  color: #8ab4ff;
+  font-weight: 700;
+
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+}
+
+/* Default fallback */
+.char-image {
+  --glow-color: rgba(0, 246, 160, 0.8);
+}
+
+/* Element colors */
+.glow-pyro   { --glow-color: rgba(255, 99, 71, 0.85); }
+.glow-hydro  { --glow-color: rgba(56, 189, 248, 0.85); }
+.glow-electro{ --glow-color: rgba(168, 85, 247, 0.9); }
+.glow-cryo   { --glow-color: rgba(147, 197, 253, 0.85); }
+.glow-anemo  { --glow-color: rgba(134, 239, 172, 0.85); }
+.glow-dendro { --glow-color: rgba(74, 222, 128, 0.9); }
+.glow-geo    { --glow-color: rgba(252, 211, 77, 0.9); }
+
+

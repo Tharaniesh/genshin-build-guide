@@ -1,0 +1,40 @@
+<div class="col-12">
+  <div class="glass p-3">
+    <div class="row g-3 align-items-center">
+      <!-- LEFT: Selected Character (same size as card) -->
+      <div class="col-12 col-md-3">
+        <h6 class="mb-2">Selected Characters</h6>
+       <button type="button" id="selectedCharacterImage" class="channel-badge text-center img-btn" aria-label="Select Character">
+          <img id="selectedCharacterImg" src="/static/portraits/hand-drawn-question-mark-silhouette.png" class="char-image" alt="Select Character"/> </button>
+      </div>
+      <!-- RIGHT: Action Options (COMPACT) -->
+      <div class="col-12 col-md-9">
+        <h6 class="mb-1">Action Options</h6>
+        <div class="muted-sm mb-2">Build or evaluate based on your characters</div>
+        <div class="glass p-2">
+          <div class="row g-2 align-items-center">
+            <!-- Create Team -->
+            <div class="col-12 col-md-4">
+              <button id="suggestActions" class="btn btn-warning btn-sm w-100" ><i class="bi bi-lightning-fill me-1"></i>Create Team</button>
+            </div>
+            <!-- Evaluate -->
+            <div class="col-12 col-md-4">
+              <button id="evaluateTeam" class="btn btn-success btn-sm w-100"><i class="bi bi-arrow-repeat me-1"></i>Evaluate</button>
+            </div>
+            <!-- AR Selector -->
+            <div class="col-12 col-md-4">
+              <select name="AR" id="ARlevel" class="form-select form-select-sm" >
+                <option value="" disabled selected>AR Level</option>
+                <option value="20">AR ≥ 20</option>
+                <option value="25">AR ≥ 25</option>
+                <option value="30">AR ≥ 30</option>
+                <option value="40">AR ≥ 40</option>
+                <option value="45">AR ≥ 45</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

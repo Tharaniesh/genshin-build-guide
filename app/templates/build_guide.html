@@ -19,123 +19,14 @@
       </div>
     </div>
 
-    <!-- builder area -->
-    <div class="row g-4">
-  <div class="col-12">
-    <div class="glass p-4">
-
-      <!-- Header -->
-      <div class="d-flex align-items-center justify-content-between mb-3">
-        <div>
-          <h5 class="mb-0">Slots & Selection</h5>
-          <div class="muted-sm">Click the " Add Slot " option to add a new slot. Minimum one character to give a suggession and Evaluate needs Minimum 2 characters to Evaluate the team</div>
-        </div>
-
-        <!-- Slot Counter (right) -->
-        <div class="muted-sm">
-          Slots: <span id="slotsCount">0</span> / 4
-        </div>
-      </div>
-
-      <!-- Buttons RIGHT -->
-      <div class="d-flex gap-2 mt-2 mb-3 justify-content-end">
-        <button id="addSlot" class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> Add Slot</button>
-        <button id="clearSlots" class="btn btn-outline-secondary btn-sm"><i class="bi bi-trash me-1"></i> Clear Slots</button>
-      </div>
-
-      <!-- Slots display -->
-      <div id="slotsArea" class="row g-3 mb-3"></div>
-
-      <!-- Bottom Action Buttons RIGHT -->
-      <div id="btmactionbtn" class="d-flex gap-2 mt-2 justify-content-end d-none">
-        <button id="suggession" class="btn btn-warning"><i class="bi bi-lightning-fill me-1"></i>Suggestion</button>
-        <button id="eval" class="btn btn-success"><i class="bi bi-arrow-repeat me-1"></i>Evaluate</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
+    <!-- action options area -->
+     <div class="row g-4 mt-4" id="action_options"></div>
+    <!-- evaluation Team Slots -->
+    <div class="row g-4 mt-2 d-none" id="team_eval"></div>
+    
     <!-- results area -->
-    <div class="row g-4 mt-4">
-      <div class="col-lg-8">
-        <div class="glass p-4 mb-3">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-  
-            <!-- LEFT -->
-            <div class="flex-grow-1">
-              <h5 class="mb-0">Results & Analysis</h5>
-              <div class="muted-sm">Suggestions and scores computed from the slots you enter.</div>
-              <!-- ROTATION NOTES BUTTON BELOW -->
-              <div class="d-flex mb-3 mt-3">
-                <button id="notesBtn" class="small-ghost-btn small-rot-btn"><i class="bi bi-journal-text me-2"></i>Rotation Notes</button>
-              </div>
-            </div>
-
-            <!-- RIGHT -->
-            <div class="text-end">
-              <div class="muted-sm">Composite Score</div>
-              <div id="composite" class="result-score">—</div>
-              <div class="muted-sm">
-                Damage <span id="ds">—</span> • 
-                Energy <span id="es">—</span> • 
-                Survival <span id="ss">—</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row g-3">
-            <div class="col-md-4">
-              <div style="border-radius:10px; padding:14px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03);">
-                <h6>Team Summary</h6>
-                <div class="muted-sm mb-2" id="archetype">Archetype: —</div>
-                <div class="mb-3 suggestion-pill" id="topSuggestion">No suggestions yet</div>
-                <button id="applyTopSuggestion" class="btn btn-sm btn-warning w-100">Apply Top Suggestion</button>
-
-                <div class="mt-3">
-                  <div class="muted-sm">Recent Actions</div>
-                  <ul id="recentActions" class="mb-0" style="list-style:circle inside; color:var(--muted);"></ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-8">
-              <h6 class="mb-2">Characters</h6>
-              <div id="charList" class="list-group"><p>list of characters entered and there Analysis report</p></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="glass p-3">
-          <div class="d-flex align-items-center justify-content-between mb-2">
-            <h6 class="mb-0">Other Suggestions</h6>
-            <small class="muted-sm">Auto-generated</small>
-          </div>
-          <ol id="otherSuggestions" style="margin-left:1rem; color:var(--muted)"></ol>
-        </div>
-      </div>
-
-      <!-- right column -->
-      <div class="col-lg-4">
-        <div class="glass p-3 mb-3">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="slot-badge">P</div>
-            <div>
-              <div><strong>Team Score</strong></div>
-              <div class="muted-sm">Live compute</div>
-            </div>
-          </div>
-
-          <div class="mb-2"><strong>synergy details slot plant to make it in a graph or something</strong></div>
-        </div>
-
-        <div class="glass p-3">
-          <h6 class="mb-2">Actions</h6>
-          <button id="exportBuild" class="btn btn-outline-primary w-100 mb-2"><i class="bi bi-box-arrow-up-right me-1"></i> Export Build</button>
-          <button id="shareBuild" class="btn btn-outline-secondary w-100"><i class="bi bi-share me-1"></i> Share</button>
-        </div>
-      </div>
+    <div class="row g-4 mt-4" id="result_team-score_section">
+      
     </div>
   </div>
 
@@ -195,7 +86,7 @@
                   />
                 </div>
                 <div class="char-name">
-                  {{ char.c_name }}
+                  <span class="d-none">      {{ char.c_name }}  </span><span>{{ char.c_slug }}</span>
                 </div>
               </div>
             </div>
@@ -264,5 +155,6 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/build_guide.js') }}"></script>
+<script src="{{ url_for('static', filename='js/action_options.js') }}"></script>
 {% endblock %}
 

@@ -1,5 +1,8 @@
 
 $(function () {
+  LoadResultSection();
+  LoadActionOptionsSection();
+  loadResutCharacterSuggesion();
   // --- UI state (no pre-filled data) ---
   let slots = [];
   const MAX_SLOTS = 4;
@@ -750,42 +753,30 @@ $('#libClear').on('click', function () {
 $('#libraryModal .btn-secondary').on('click', function () {
 
   const selected = Array.from(selectedCharacters);
-  console.log('Final selection:', selected);
+  // const user_id = $('#user_id').val();
+  const user_id = 12345; // TEMP FIX
 
-  const user_id = $('#user_id').val();
-  const selected_characters = selected.join(',');
-
-  // Save locally
-  localStorage.setItem(
-    `library_selection_${user_id}`,
-    selected_characters
-  );
-
-  // Send to backend
   $.ajax({
     url: '/api/apply_library_selection',
     method: 'POST',
-    contentType: 'application/json; charset=utf-8',
+    contentType: 'application/json',      // ✅ REQUIRED
     dataType: 'json',
     data: JSON.stringify({
       user_id: user_id,
-      selected_characters: selected
+      selected_characters: selected        // send as array, not string
     }),
     success: function (res) {
-      console.log('Library selection applied successfully:', res);
-
-      // Bootstrap 5 modal close (CORRECT)
-      const modalEl = document.getElementById('libraryModal');
-      const modal = bootstrap.Modal.getInstance(modalEl);
-      if (modal) modal.hide();
+      console.log('Library selection applied:', res);
+      $('#libraryModal').modal('hide');
     },
-    error: function (xhr, status, err) {
-      console.error('AJAX error', status, err, xhr.responseText);
-      alert('Failed to apply library selection.');
+    error: function (xhr) {
+      console.error('AJAX error', xhr.responseText);
+      alert('Failed to apply library selection');
     }
   });
 
 });
+
 
 $('#libraryModal').on('shown.bs.modal', function () {
   const user_id = $('#user_id').val();
@@ -798,3 +789,47 @@ $('#libraryModal').on('shown.bs.modal', function () {
   });
 });
 
+function LoadResultSection() {
+  $.ajax({
+    url: '/api/result_section', 
+    method: 'POST',
+    dataType: 'json',
+    success: function (res) {
+      console.log('Result section loaded:'); 
+      $('#result_team-score_section').html(res.data);
+    },
+    error: function (xhr) {
+      console.error('AJAX error', xhr.responseText);
+    }
+  });
+}
+
+function LoadActionOptionsSection() {
+  $.ajax({
+    url: '/api/action_options', 
+    method: 'POST',
+    dataType: 'json',
+    success: function (res) {
+      console.log('Action options section loaded:');
+      $('#action_options').html(res.data);
+    },
+    error: function (xhr) {
+      console.error('AJAX error', xhr.responseText);
+    }
+  });
+}
+
+function loadResutCharacterSuggesion(){
+  $.ajax({
+    url: '/api/result_character_suggestion', 
+    method: 'POST',
+    dataType: 'json',
+    success: function (res) {
+      console.log('Result character suggestion loaded:');
+      $('#result_character_suggestion').html(res.data);
+    },
+    error: function (xhr) {
+      console.error('AJAX error', xhr.responseText);
+    }
+  });
+}

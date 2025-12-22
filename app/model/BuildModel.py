@@ -1,5 +1,6 @@
 # Add this to app/model/BuildModel.py
 
+import json
 from sqlalchemy import create_engine, text
 from flask import current_app
 
@@ -176,3 +177,45 @@ class buildModel:
         except Exception as e:
             current_app.logger.error(f"[BuildModel.insert_activity_log] {e}")
             return False
+
+    def get_user_library_slugs(self, user_id):
+        sql = text("SELECT char_slug FROM user_library WHERE user_id = :uid;")
+        try:
+            with self.engine.connect() as conn:
+                result = conn.execute(sql, {"uid": user_id}).mappings().all()
+                return {row['char_slug'] for row in result}
+        except Exception as e:
+            current_app.logger.error(f"[BuildModel.get_user_library_slugs] {e}")
+            return set()
+
+    def get_user_library_slugs(self, user_id):
+        sql = text("SELECT char_slug FROM user_library WHERE user_id = :uid;")
+        try:
+            with self.engine.connect() as conn:
+                result = conn.execute(sql, {"uid": user_id}).mappings().all()
+                return {row['char_slug'] for row in result}
+        except Exception as e:
+            current_app.logger.error(f"[BuildModel.get_user_library_slugs] {e}")
+            return set()
+    
+    def add_user_library_entries(self, user_id, slugs):
+        sql = text("INSERT IGNORE INTO user_library (user_id, char_slug) VALUES (:uid, :slug);")
+        try:
+            with self.engine.connect() as conn:
+                conn.execute(sql, [{"uid": user_id, "slug": slug} for slug in slugs])
+            return True
+        except Exception as e:
+            current_app.logger.error(f"[BuildModel.add_user_library_entries] {e}")
+            return False
+        
+    def remove_user_library_entries(self, user_id, slugs):
+        sql = text("DELETE FROM user_library WHERE user_id = :uid AND char_slug = :slug;")
+        try:
+            with self.engine.connect() as conn:
+                conn.execute(sql, [{"uid": user_id, "slug": slug} for slug in slugs])
+            return True
+        except Exception as e:
+            current_app.logger.error(f"[BuildModel.remove_user_library_entries] {e}")
+            return False
+        
+            
