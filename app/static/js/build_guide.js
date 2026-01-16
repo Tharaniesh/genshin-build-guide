@@ -1,6 +1,5 @@
 
 $(function () {
-  LoadResultSection();
   LoadActionOptionsSection();
   loadResutCharacterSuggesion();
   // --- UI state (no pre-filled data) ---
@@ -655,12 +654,19 @@ function checkLoginStatus() {
     method: 'GET',
     dataType: 'json',
     success: function (res) {
+      console.log('Login status response:', res);
+
       if (res.logged_in) {
-         console.log('Login status response:', res);
-        $('#libraryModal').modal('show');
+        // User is logged in → open modal
+        if ($('#libraryModal').length) {
+          const modal = new bootstrap.Modal(
+            document.getElementById('libraryModal')
+          );
+          modal.show();
+        }
       } else {
-        $('#libraryModal').modal('show');
-        // LoginModal.open(); // 👈 show login instead
+        // User not logged in → redirect to login page
+        redirectToLogin();
       }
     },
     error: function (xhr, status, err) {
@@ -669,6 +675,7 @@ function checkLoginStatus() {
     }
   });
 }
+
 
 let activeElement = 'all';
 let activeWeapon = null;
@@ -789,20 +796,7 @@ $('#libraryModal').on('shown.bs.modal', function () {
   });
 });
 
-function LoadResultSection() {
-  $.ajax({
-    url: '/api/result_section', 
-    method: 'POST',
-    dataType: 'json',
-    success: function (res) {
-      console.log('Result section loaded:'); 
-      $('#result_team-score_section').html(res.data);
-    },
-    error: function (xhr) {
-      console.error('AJAX error', xhr.responseText);
-    }
-  });
-}
+
 
 function LoadActionOptionsSection() {
   $.ajax({
@@ -832,4 +826,12 @@ function loadResutCharacterSuggesion(){
       console.error('AJAX error', xhr.responseText);
     }
   });
+}
+
+
+function redirectToLogin() {
+  $.ajax({
+    url: '/login',
+    method: 'GET',
+  })
 }

@@ -1,0 +1,117 @@
+DMG =
+TalentMultiplier
+× ATK_Scaling
+× (1 + DMG_Bonus)
+× ReactionMultiplier
+× CritMultiplier
+× EnemyMultiplier
+
+
+Expanded :
+
+DMG =
+Talent%
+× (BaseATK × (1 + ATK% ) + FlatATK)
+× (1 + ElementalDMG% + SkillDMG% + BurstDMG% + PlungeDMG%)
+× Reaction
+× (1 + CritDMG × CritRate)
+× ResistanceMultiplier
+× DefenseMultiplier
+
+
+Elemental ReactionMultiplier
+
+ReactionDMG =
+LevelMultiplier
+× ReactionBase
+× (1 + EM / (EM + 1200))
+× ReactionBonus
+
+
+Support and buffer stacking :
+TotalATK = BaseATK × (1 + ATK% from supports) + FlatATK
+TotalDMGBonus = Element% + Skill% + Burst% + TeamBonus%
+CritMultiplier = 1 + (CritRate × CritDMG)
+
+
+Natland team buffs :
+
+NatlanBonus =
+1 + (0.06 × NatlanMembers)
++ (0.02 × NightSoulStacks)
+
+
+Classic reagion buffs :
+
+ClassicRegionBonus =
+1 + (0.04 × UniqueRegions)
++ (0.03 × ElementalReactionsTriggered)
+
+
+Sumeru team buffs :
+
+SumeruBonus =
+1 + (TotalEM / 2000)
++ (0.05 × DendroReactions)
+
+
+Nord Kari team buffs :
+
+NordBonus =
+1 + (0.05 × PhysicalUnits)
++ (0.1 × CryoResShredSources)
+
+
+sample implement
+
+TeamBonusMultiplier =
+1
++ Σ RegionBonuses
++ Σ SupportBonuses
++ Σ ReactionBonuses
+
+
+final formula :
+
+FinalDamage =
+Talent *
+TotalATK *
+(1 + DMGBonus + TeamBonus) *
+Reaction *
+Crit *
+Enemy
+
+
+FinalDamage =
+Talent%(constellation-adjusted)
+× TotalATK(constellation-adjusted)
+× (1 + DMGBonus + TeamBonus + ConstellationDMG)
+× CritMultiplier(constellation-adjusted)
+× ReactionMultiplier(constellation-adjusted)
+× EnemyMultiplier(constellation-adjusted)
+
+
+
+Final Combained Formula:
+
+TotalATK =
+(BaseATK × (1 + ATK% + C_ATK%))
++ FlatATK
++ Buffs
+
+DMGBonus =
+ElementDMG
++ Skill/Burst/NA DMG
++ TeamBonus
++ C_DMG
+
+CritMultiplier =
+1 + ( (CritRate + C_CritRate) × (CritDMG + C_CritDMG) )
+
+FinalDamage =
+Talent%(C-adjusted)
+× TotalATK
+× (1 + DMGBonus)
+× CritMultiplier
+× ReactionMultiplier(C-adjusted)
+× EnemyMultiplier(C-adjusted)

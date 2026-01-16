@@ -34,6 +34,8 @@ def create_app(config_object=None):
     try:
         from .Controller.BuildController import build_bp
         app.register_blueprint(build_bp)
+        from .Controller.DamageCalculatorController import dmgcal
+        app.register_blueprint(dmgcal)
         app.logger.info("📌 BuildController loaded and blueprint registered")
     except Exception as e:
         app.logger.warning(f"⚠ Controller load failed during registration: {e}")

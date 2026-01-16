@@ -1,9 +1,10 @@
 import mysql.connector
 
 class Config(object):
-	DEBUG = False
-	TESTING = False
-	DATABASE_URI = 'mysql+mysqlconnector://root:1234@127.0.0.1/genshin_team_optimizer'
+    DEBUG = False
+    TESTING = False
+    # DATABASE_URI = 'mysql+mysqlconnector://root:1234@127.0.0.1/genshin_team_optimizer'
+    DATABASE_URI = 'mysql+mysqlconnector://root:1234@127.0.0.1/genshin_build_guide'
 
 def get_db_connection():
     try:

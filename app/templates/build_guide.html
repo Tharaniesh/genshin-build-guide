@@ -72,7 +72,13 @@
           <!-- CHARACTER GRID -->
           <div class="row g-3">
             {% for char in characters %}
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2 library-item" data-element="{{ char.e_name | lower }}" data-weapon="{{ char.weapon_type | lower  }}">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 library-item" data-element="{{ char.e_name | lower }}" data-weapon="{{ char.wt_name | lower  }}" data-char-name="{{ char.c_name }}" 
+              data-img-src="
+                {% if char.has_image %}
+                  /static/portraits/{{ char.c_slug }}.png
+                {% else %}
+                  /static/portraits/placeholder.jpg
+                {% endif %}">
               <div class="character-card text-center selectable" data-char-id="{{ char.c_slug }}">
                 <div class="char-image-wrap">
                   <img
@@ -96,7 +102,7 @@
         <!-- FOOTER -->
         <div class="modal-footer">
           <button class="btn btn-outline-danger" id="libClear">Clear Selection</button>
-          <button class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
+          <button class="btn btn-secondary" data-bs-dismiss="modal" id="savechararcters">Done</button>
         </div>
       </div>
     </div>
@@ -151,6 +157,28 @@
     </div>
   </div>
 </div>
+
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 2000;">
+  <div id="warningToast" class="toast align-items-center text-bg-warning border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body">
+        ⚠️ Please select a character first.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 2000;">
+  <div id="warningToastAR" class="toast align-items-center text-bg-warning border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body">
+        ⚠️ Please select an AR level.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}

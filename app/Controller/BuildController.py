@@ -6,18 +6,24 @@ from math import e
 from time import time
 from xml.dom.minidom import CharacterData
 from app.model import BuildModel
-from flask import Blueprint, render_template, request, jsonify, current_app
+from app.model import SuggestTeamModel 
+from flask import Blueprint, render_template, request, jsonify, current_app, redirect as redirect_url
 from app.model.BuildModel import buildModel, get_engine
+from app.model.SuggestTeamModel import suggestTeamModel
 
 build_bp = Blueprint('build', __name__, url_prefix='')
 
 @build_bp.route('/api/check_login')
 def check_login():
     login_status = request.cookies.get('login_status', 'false').lower() == 'true'
-    if login_status:
-        return jsonify({'logged_in': True})
-    else:
-        return jsonify({'logged_in': False})
+    return jsonify({'logged_in': login_status})
+
+
+@build_bp.route('/login')
+def login_page():
+    print("loading login page")
+    return render_template('login_page.html')
+
 
 @build_bp.route('/')
 @build_bp.route('/home')
@@ -37,6 +43,9 @@ def slot_card():
 
 @build_bp.route('/api/result_section', methods=['POST'])
 def result_section():
+    c_id = request.values.get('c_id', '').strip().lower()
+    print("c_id:", c_id)
+    team_data = suggestTeamModel().team_suggestions(c_id)
     data = render_template('result_section.html')
     if not data:
         return jsonify({"status": "error", "message": "Invalid JSON"}), 400
@@ -195,3 +204,38 @@ def character_with_image(char):
     char['has_image'] = os.path.exists(img_path)
     return char
 
+@build_bp.route('/suggest_teams')
+def suggest_teams():
+    try:
+        selected_character = request.args.get('selectedcharacter', '').strip().lower()
+        preferred_role = request.args.get('preferedrole', '').strip().lower()
+
+        if not selected_character or not preferred_role:
+            return jsonify({"error": "Missing parameters"}), 400
+
+        model = SuggestTeamModel()
+
+        if preferred_role == 'main-dps':
+            teams = model.suggest_main_dps(selected_character)
+
+        elif preferred_role == 'sub-dps':
+            teams = model.suggest_sub_dps(selected_character)
+
+        elif preferred_role == 'support':
+            teams = model.suggest_support(selected_character)
+
+        elif preferred_role == 'healer':
+            teams = model.suggest_healer(selected_character)
+
+        else:
+            return jsonify({"error": "Invalid role"}), 400
+
+        return jsonify({
+            "selected_character": selected_character,
+            "preferred_role": preferred_role,
+            "teams": teams
+        })
+
+    except Exception as e:
+        print(f"[suggest_teams] Failed: {e}")
+        return jsonify({"error": "Internal server error"}), 500

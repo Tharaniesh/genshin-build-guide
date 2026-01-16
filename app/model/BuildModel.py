@@ -37,7 +37,10 @@ class buildModel:
     # Simple table readers
     # ------------------------
     def characters(self):
-        sql = text("SELECT * FROM characters INNER JOIN elements ON characters.e_id = elements.e_id ORDER BY c_id ASC;")
+        sql = text("""select c_id,c_name,c_slug,wt_id,wt_name,e_id,e_name from characters c
+	        inner join elements e on e.e_id = c.c_element
+            inner join weapon_types wt on wt_id = c.c_weapon_type 
+            ORDER BY c_id ASC;""")
         try:
             with self.engine.connect() as conn:
                 rows = conn.execute(sql).mappings().all()

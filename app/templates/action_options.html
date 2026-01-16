@@ -2,10 +2,18 @@
   <div class="glass p-3">
     <div class="row g-3 align-items-center">
       <!-- LEFT: Selected Character (same size as card) -->
-      <div class="col-12 col-md-3">
+      <div class="col-12 col-md-3 row g-2 text-center">
         <h6 class="mb-2">Selected Characters</h6>
-       <button type="button" id="selectedCharacterImage" class="channel-badge text-center img-btn" aria-label="Select Character">
-          <img id="selectedCharacterImg" src="/static/portraits/hand-drawn-question-mark-silhouette.png" class="char-image" alt="Select Character"/> </button>
+        <div class="col-5  justify-content-center">
+          <button type="button" id="selectedCharacterImage" class="channel-badge text-center img-btn" aria-label="Select Character">
+            <img id="selectedCharacterImg" src="/static/portraits/hand-drawn-question-mark-silhouette.png" class="char-image" alt="Select Character"/> 
+          </button>
+        </div>
+        <div class="col-7 d-none selected-character-info text-start">
+          Name : <span id="selectedCharacterName"></span><br>
+          Element : <span id="selectedCharacterelement"></span><br>
+          <span id="selectedCharacterWeaponType"></span>  User
+        </div>
       </div>
       <!-- RIGHT: Action Options (COMPACT) -->
       <div class="col-12 col-md-9">
